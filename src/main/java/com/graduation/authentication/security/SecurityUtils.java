@@ -1,0 +1,121 @@
+package com.graduation.authentication.security;
+
+
+import com.graduation.authentication.config.ApplicationProperties;
+import com.graduation.authentication.security.jwt.JWTConfigurer;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+@Component
+@Slf4j
+public class SecurityUtils {
+    private static final String BEARER_KEY = "Bearer";
+
+    @Autowired
+    private ApplicationProperties applicationProperties;
+
+    private static final String AUTHORITIES_KEY = "auth";
+
+    public String getAuthenticatedUsername() {
+        if(Objects.isNull(SecurityUtils.getCurrentUser())){
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String token = resolveToken(request);
+            return getLoggedInUsernameFromAuthentication(token);
+        } else {
+            return getCurrentUser().getUsername();
+        }
+    }
+
+    public static String resolveToken(HttpServletRequest request) {
+        String bearerToken = "";
+
+        if (request.getCookies() != null) {
+            for (int cookieIndex = 0; cookieIndex < request.getCookies().length; cookieIndex++) {
+                Cookie cookie = request.getCookies()[cookieIndex];
+                if (cookie.getName().equals(JWTConfigurer.AUTHORIZATION_HEADER)) {
+                    bearerToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_KEY)) {
+            return bearerToken.substring(7);
+        }
+        String jwt = request.getParameter(JWTConfigurer.AUTHORIZATION_TOKEN);
+        if (StringUtils.hasText(jwt)) {
+            return jwt;
+        }
+        return null;
+    }
+
+    private String getLoggedInUsernameFromAuthentication(String jwt){
+        Authentication authentication = getAuthenticationFromToken(jwt);
+        try {
+            return authentication.getName();
+        } catch(Exception exception) {
+            log.info("Cannot fetch username from authentication");
+            throw new IllegalStateException("Error fetching username from authentication");
+        }
+    }
+
+    public Authentication getAuthenticationFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(applicationProperties.getSecurity().getAuthentication().getJwt().getSecret())
+                .parseClaimsJws(token)
+                .getBody();
+
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        User principal = new User(claims.getSubject(), "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+    }
+
+    public static User getCurrentUser() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        if (authentication != null) {
+            if (authentication.getPrincipal() instanceof User) {
+                return (User) authentication.getPrincipal();
+            }
+        }
+        log.info("User not found!");
+        return null;
+    }
+
+    public boolean isValidToken(String authToken) {
+        String secretKey = applicationProperties.getSecurity().getAuthentication().getJwt().getSecret();
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
+            return true;
+        } catch (SignatureException e) {
+            log.info("Invalid JWT signature: " + e.getMessage());
+            return false;
+        }
+    }
+}
