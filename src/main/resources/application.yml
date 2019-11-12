@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/main_db
+    username: user
+    password: user
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+app:
+  secret: JWTSuperSecretKey
+  tokenValidityInSeconds: 1800000
