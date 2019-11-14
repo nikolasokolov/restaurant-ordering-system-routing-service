@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "app")
+@ConfigurationProperties(prefix = "portal-service")
 public class ApplicationProperties {
 
     private final Security security = new Security();

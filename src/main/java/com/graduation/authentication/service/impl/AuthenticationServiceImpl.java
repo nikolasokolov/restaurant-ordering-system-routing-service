@@ -51,7 +51,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = tokenProvider.createToken(authentication, false);
-            return ResponseEntity.ok(new UserData(username, jwt));
+            String jwtToken = "Bearer " + jwt;
+            return ResponseEntity.ok(new UserData(username, jwtToken));
         } catch (BadCredentialsException exception) {
             log.warn("Bad credentials for username=" + username);
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);

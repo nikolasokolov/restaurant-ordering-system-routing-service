@@ -47,25 +47,15 @@ public class SecurityUtils {
         }
     }
 
+    public static boolean isAuthenticated(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth instanceof UsernamePasswordAuthenticationToken;
+    }
+
     public static String resolveToken(HttpServletRequest request) {
-        String bearerToken = "";
-
-        if (request.getCookies() != null) {
-            for (int cookieIndex = 0; cookieIndex < request.getCookies().length; cookieIndex++) {
-                Cookie cookie = request.getCookies()[cookieIndex];
-                if (cookie.getName().equals(JWTConfigurer.AUTHORIZATION_HEADER)) {
-                    bearerToken = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_KEY)) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
-        }
-        String jwt = request.getParameter(JWTConfigurer.AUTHORIZATION_TOKEN);
-        if (StringUtils.hasText(jwt)) {
-            return jwt;
         }
         return null;
     }
