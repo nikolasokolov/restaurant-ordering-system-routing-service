@@ -24,3 +24,18 @@ portal-service:
   rememberme:
     # security key (this key should be unique for your application, and kept secret)
     key: ee4df72e0480044112ea60b7659b297e6f988f7c
+
+zuul:
+  routes:
+    cloud:
+      path: /api/**
+      sensitiveHeaders:
+      url: https://localhost:8080
+      stripPrefix: false
+
+server:
+  ssl:
+    key-store: classpath:ssl/keystore.p12
+    key-store-password: qwerty
+    key-store-type: PKCS12
+    key-alias: tomcat
