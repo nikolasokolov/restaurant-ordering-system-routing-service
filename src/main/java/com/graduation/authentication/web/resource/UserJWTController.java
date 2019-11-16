@@ -21,7 +21,7 @@ public class UserJWTController {
     private final AuthenticationService authenticationService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> authorize(@RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse) {
+    public ResponseEntity<?> authorize(@RequestBody LoginRequest loginRequest) {
         return authenticationService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
     }
 
@@ -30,9 +30,4 @@ public class UserJWTController {
         return authenticationService.logout(request, response);
     }
 
-    @RequestMapping(value = "/api/test", method = RequestMethod.GET)
-    public ResponseEntity test() {
-        log.info("Test request received");
-        return ResponseEntity.ok("OK");
-    }
 }
