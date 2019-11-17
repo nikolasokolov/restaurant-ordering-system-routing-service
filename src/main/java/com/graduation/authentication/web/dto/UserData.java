@@ -8,4 +8,5 @@ import lombok.Data;
 public class UserData {
     private String username;
     private String token;
+    private Long expiresIn;
 }

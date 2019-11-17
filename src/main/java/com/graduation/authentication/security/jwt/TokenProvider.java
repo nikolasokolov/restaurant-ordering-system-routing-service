@@ -3,23 +3,23 @@ package com.graduation.authentication.security.jwt;
 import com.graduation.authentication.config.ApplicationProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class TokenProvider {
 
-    @Autowired
-    private ApplicationProperties applicationProperties;
+    private final ApplicationProperties applicationProperties;
 
     private static final String AUTHORITIES_KEY = "auth";
 

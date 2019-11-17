@@ -2,10 +2,10 @@ package com.graduation.authentication.security;
 
 
 import com.graduation.authentication.config.ApplicationProperties;
-import com.graduation.authentication.security.jwt.JWTConfigurer;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.Cookie;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,11 +29,9 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class SecurityUtils {
-    private static final String BEARER_KEY = "Bearer";
-
-    @Autowired
-    private ApplicationProperties applicationProperties;
+    private final ApplicationProperties applicationProperties;
 
     private static final String AUTHORITIES_KEY = "auth";
 

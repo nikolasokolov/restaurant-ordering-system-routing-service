@@ -13,16 +13,15 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+    show-sql: true
+    generate-ddl: true
 
-portal-service:
+authentication-properties:
   security:
     authentication:
       jwt:
         secret: myXAuthSecret
-        #secret key for generation reports token
-        reportSecretKey: zani
-        # Token is valid 720 minutes
-        tokenValidityInSeconds: 43200
+        tokenValidityInSeconds: 7200
   rememberme:
     # security key (this key should be unique for your application, and kept secret)
     key: ee4df72e0480044112ea60b7659b297e6f988f7c
