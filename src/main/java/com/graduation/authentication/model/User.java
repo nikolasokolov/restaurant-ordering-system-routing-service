@@ -44,6 +44,10 @@ public class User implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Authority> authorities = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

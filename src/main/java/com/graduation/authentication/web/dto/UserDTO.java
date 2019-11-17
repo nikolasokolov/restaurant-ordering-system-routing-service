@@ -1,6 +1,7 @@
 package com.graduation.authentication.web.dto;
 
 import com.graduation.authentication.model.Authority;
+import com.graduation.authentication.model.Company;
 import com.graduation.authentication.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +17,10 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 public class UserDTO {
-
     public static final int PASSWORD_MIN_LENGTH = 6;
     public static final int PASSWORD_MAX_LENGTH = 100;
+
+    private Long id;
 
     @Size(min = 6, max = 100)
     private String username;
@@ -31,21 +33,21 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    private Long userId;
+    private Company company;
 
     public UserDTO(User user) {
-        this(user.getUsername(), null, user.getEmail(),
+        this(user.getId(), user.getUsername(), null, user.getEmail(),
                 user.getAuthorities().stream().map(Authority::getName)
-                        .collect(Collectors.toSet()), user.getId());
+                        .collect(Collectors.toSet()), user.getCompany());
     }
 
-    public UserDTO(String username, String password,
-                   String email, Set<String> authorities, Long userId) {
-
+    public UserDTO(Long id, String username, String password,
+                   String email, Set<String> authorities, Company company) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.authorities = authorities;
-        this.userId = userId;
+        this.company = company;
     }
 }
