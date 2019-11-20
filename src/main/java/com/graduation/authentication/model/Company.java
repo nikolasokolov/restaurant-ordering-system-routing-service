@@ -1,9 +1,7 @@
 package com.graduation.authentication.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -32,4 +30,10 @@ public class Company {
     @JoinColumn(name = "user_id")
     private Set<User> users;
 
+    @ToString.Exclude
+    @JsonIgnore
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "company_restaurant",
+            joinColumns = {@JoinColumn(name = "company_id")}, inverseJoinColumns = {@JoinColumn(name = "restaurant_id")})
+    private Set<Restaurant> restaurants;
 }

@@ -28,7 +28,7 @@ authentication-properties:
 zuul:
   routes:
     cloud:
-      path: /api/**
+      path: /main/**
       sensitiveHeaders:
       url: http://localhost:8081
       stripPrefix: false
