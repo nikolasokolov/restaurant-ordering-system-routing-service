@@ -26,9 +26,8 @@ public class Company {
     @NotBlank
     private String phoneNumber;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private Set<User> users;
+    @Lob
+    private byte[] logo;
 
     @ToString.Exclude
     @JsonIgnore
