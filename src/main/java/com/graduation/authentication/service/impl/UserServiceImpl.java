@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean changePassword(ChangePasswordRequest changePasswordRequest) throws Exception {
         if (!changePasswordRequest.getNewPassword().equals(changePasswordRequest.getConfirmPassword())) {
             throw new Exception("Passwords doesn't match");
