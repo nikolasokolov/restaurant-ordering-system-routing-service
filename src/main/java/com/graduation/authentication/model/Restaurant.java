@@ -21,7 +21,19 @@ public class Restaurant {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String address;
+
+    @NotBlank
+    private String phoneNumber;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @Lob
+    private byte[] logo;
+
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "restaurants")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "restaurants", fetch = FetchType.LAZY)
     private Set<Company> companies;
 }

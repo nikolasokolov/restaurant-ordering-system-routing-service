@@ -14,7 +14,7 @@ import java.util.Set;
 @Builder
 public class Company {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotBlank
@@ -26,13 +26,12 @@ public class Company {
     @NotBlank
     private String phoneNumber;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private Set<User> users;
+    @Lob
+    private byte[] logo;
 
     @ToString.Exclude
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "company_restaurant",
             joinColumns = {@JoinColumn(name = "company_id")}, inverseJoinColumns = {@JoinColumn(name = "restaurant_id")})
     private Set<Restaurant> restaurants;
