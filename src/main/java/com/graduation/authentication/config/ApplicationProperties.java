@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "authentication-properties")
 public class ApplicationProperties {
-
     private final Security security = new Security();
 
     @Data

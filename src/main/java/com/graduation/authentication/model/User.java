@@ -42,9 +42,6 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
-    private Restaurant restaurant;
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;

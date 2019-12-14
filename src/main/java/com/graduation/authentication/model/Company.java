@@ -1,11 +1,16 @@
 package com.graduation.authentication.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
 
 @Entity
 @Data
@@ -28,11 +33,4 @@ public class Company {
 
     @Lob
     private byte[] logo;
-
-    @ToString.Exclude
-    @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinTable(name = "company_restaurant",
-            joinColumns = {@JoinColumn(name = "company_id")}, inverseJoinColumns = {@JoinColumn(name = "restaurant_id")})
-    private Set<Restaurant> restaurants;
 }
