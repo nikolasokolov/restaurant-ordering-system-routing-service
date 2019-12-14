@@ -13,7 +13,6 @@ import javax.inject.Inject;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class JWTConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
-
     private final SecurityUtils securityUtils;
 
     @Override

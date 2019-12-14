@@ -7,7 +7,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,17 +26,17 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Component
 @Slf4j
+@Component
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class SecurityUtils {
+    private static final String AUTHORITIES_KEY = "auth";
     private final ApplicationProperties applicationProperties;
 
-    private static final String AUTHORITIES_KEY = "auth";
-
     public String getAuthenticatedUsername() {
-        if(Objects.isNull(SecurityUtils.getCurrentUser())){
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        if (Objects.isNull(SecurityUtils.getCurrentUser())) {
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                    .getRequest();
             String token = resolveToken(request);
             return getLoggedInUsernameFromAuthentication(token);
         } else {
@@ -80,7 +79,6 @@ public class SecurityUtils {
                         .collect(Collectors.toList());
 
         User principal = new User(claims.getSubject(), "", authorities);
-
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
@@ -92,7 +90,7 @@ public class SecurityUtils {
                 return (User) authentication.getPrincipal();
             }
         }
-        log.info("User not found!");
+        log.info("Cannot fetch user from security context, trying to fetch user from token");
         return null;
     }
 

@@ -10,16 +10,14 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
+@Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomZuulFilter extends ZuulFilter {
-
-    private final UserService userService;
-
     private static final String FILTER_TYPE = "pre";
     private static final int FILTER_ORDER = 1;
 
+    private final UserService userService;
 
     @Override
     public String filterType() {

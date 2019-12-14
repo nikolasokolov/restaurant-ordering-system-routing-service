@@ -18,39 +18,26 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class TokenProvider {
-
+    private static final String AUTHORITIES_KEY = "auth";
     private final ApplicationProperties applicationProperties;
 
-    private static final String AUTHORITIES_KEY = "auth";
-
     private String secretKey;
-
     private long tokenValidityInSeconds;
-
-    private long tokenValidityInSecondsForRememberMe;
 
     @PostConstruct
     public void init() {
         this.secretKey =  applicationProperties.getSecurity().getAuthentication().getJwt().getSecret();
-
-        this.tokenValidityInSeconds =
-                1000 * applicationProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
-        this.tokenValidityInSecondsForRememberMe =
-                1000 * applicationProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe();
+        this.tokenValidityInSeconds = 1000 * applicationProperties.getSecurity()
+                .getAuthentication().getJwt().getTokenValidityInSeconds();
     }
 
-    public String createToken(Authentication authentication, Boolean rememberMe) {
+    public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
-        Date validity;
-        if (rememberMe) {
-            validity = new Date(now + this.tokenValidityInSecondsForRememberMe);
-        } else {
-            validity = new Date(now + this.tokenValidityInSeconds);
-        }
+        Date validity = new Date(now + this.tokenValidityInSeconds);
 
         return Jwts.builder()
             .setSubject(authentication.getName())

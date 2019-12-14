@@ -3,6 +3,7 @@ package com.graduation.authentication.config;
 import com.graduation.authentication.security.AuthoritiesConstants;
 import com.graduation.authentication.security.Http401UnauthorizedEntryPoint;
 import com.graduation.authentication.security.jwt.JWTConfigurer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,19 +21,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 
+import javax.inject.Inject;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor(onConstructor = @__(@Inject))
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private Http401UnauthorizedEntryPoint authenticationEntryPoint;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private JWTConfigurer jwtConfigurer;
+    private final Http401UnauthorizedEntryPoint authenticationEntryPoint;
+    private final UserDetailsService userDetailsService;
+    private final JWTConfigurer jwtConfigurer;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -68,8 +66,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests();
 
         expressionInterceptUrlRegistry
-                .antMatchers(UrlConstants.ADMIN_URLS).hasAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers(UrlConstants.USER_ROLE).hasAnyAuthority(AuthoritiesConstants.USER)
+                .antMatchers(UrlConstants.SUPER_ADMIN_URLS).hasAuthority(AuthoritiesConstants.ROLE_SUPER_ADMIN)
+                .antMatchers(UrlConstants.ROLE_ADMIN_URLS).hasAuthority(AuthoritiesConstants.ROLE_ADMIN)
+                .antMatchers(UrlConstants.ROLE_USER_URLS).hasAuthority(AuthoritiesConstants.ROLE_USER)
                 .antMatchers(UrlConstants.PERMIT_ALL_URLS).permitAll()
                 .and()
                 .apply(jwtConfigurer);
