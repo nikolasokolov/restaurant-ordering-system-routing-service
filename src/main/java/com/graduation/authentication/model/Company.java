@@ -5,9 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
 
 @Entity
 @Data
@@ -16,7 +19,7 @@ import java.util.Set;
 @Builder
 public class Company {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotBlank
@@ -28,8 +31,6 @@ public class Company {
     @NotBlank
     private String phoneNumber;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private Set<User> users;
-
+    @Lob
+    private byte[] logo;
 }

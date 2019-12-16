@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserData {
+public class UserTokenResponseDTO {
     private String username;
     private String token;
     private Long expiresIn;

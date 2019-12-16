@@ -13,22 +13,19 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-    generate-ddl: true
+    generate-ddl: false
 
 authentication-properties:
   security:
     authentication:
       jwt:
         secret: myXAuthSecret
-        tokenValidityInSeconds: 7200
-  rememberme:
-    # security key (this key should be unique for your application, and kept secret)
-    key: ee4df72e0480044112ea60b7659b297e6f988f7c
+        token-validity-in-seconds: 7200
 
 zuul:
   routes:
     cloud:
-      path: /api/**
+      path: /main/**
       sensitiveHeaders:
       url: http://localhost:8081
       stripPrefix: false

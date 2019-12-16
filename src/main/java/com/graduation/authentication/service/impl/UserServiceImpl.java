@@ -13,14 +13,15 @@ import javax.inject.Inject;
 
 @Slf4j
 @Service
-@Transactional
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class UserServiceImpl implements UserService {
     private final SecurityUtils securityUtils;
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public User getUser() {
-        return userRepository.findOneByUsername(securityUtils.getAuthenticatedUsername()).orElse(null);
+        String authenticatedUser = securityUtils.getAuthenticatedUsername();
+        return userRepository.findOneByUsername(authenticatedUser).orElse(null);
     }
 }

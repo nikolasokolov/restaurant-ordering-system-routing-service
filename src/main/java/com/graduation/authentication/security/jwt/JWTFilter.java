@@ -18,14 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Filters incoming requests and installs a Spring Security principal if a header corresponding to a
- * valid user is found.
- */
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class JWTFilter extends GenericFilterBean {
-
     private static final String OPTIONS = "OPTIONS";
 
     private final SecurityUtils securityUtils;
@@ -38,7 +33,7 @@ public class JWTFilter extends GenericFilterBean {
             HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
             String jwt = SecurityUtils.resolveToken(httpServletRequest);
 
-            //Skip checking cookie when user is authenticating, because always will be invalid
+            // Skip checking token when user is trying to authenticate, because token will not be present
             if (((HttpServletRequest) servletRequest).getRequestURI().contains("/api/")) {
                 if (StringUtils.hasText(jwt)) {
                     if (securityUtils.isValidToken(jwt)) {
@@ -75,16 +70,6 @@ public class JWTFilter extends GenericFilterBean {
             } catch (IOException e) {
                 log.error("Unable to write a message to the response body on token expired.");
             }
-        }
-    }
-
-    private void redirectToUrl(HttpServletResponse httpServletResponse, String redirectionUrl) {
-        try {
-            httpServletResponse.sendRedirect(redirectionUrl);
-            return;
-        } catch (IOException e) {
-            log.info("Exception thrown: {} while redirecting to url: {} ", e.getMessage(), redirectionUrl);
-            throw new IllegalStateException("Exception thrown: " + e.getMessage());
         }
     }
 }
