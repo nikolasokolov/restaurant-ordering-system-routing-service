@@ -3,7 +3,7 @@ package com.graduation.authentication.service.impl;
 import com.graduation.authentication.config.ApplicationProperties;
 import com.graduation.authentication.security.jwt.TokenProvider;
 import com.graduation.authentication.service.AuthenticationService;
-import com.graduation.authentication.web.dto.UserTokenResponseDTO;
+import com.graduation.authentication.dto.UserTokenResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
