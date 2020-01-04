@@ -1,8 +1,8 @@
-package com.graduation.authentication.web.resource;
+package com.graduation.authentication.rest;
 
 import com.graduation.authentication.service.AuthenticationService;
-import com.graduation.authentication.web.dto.LoginRequestDTO;
-import com.graduation.authentication.web.dto.UserTokenResponseDTO;
+import com.graduation.authentication.dto.LoginRequestDTO;
+import com.graduation.authentication.dto.UserTokenResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

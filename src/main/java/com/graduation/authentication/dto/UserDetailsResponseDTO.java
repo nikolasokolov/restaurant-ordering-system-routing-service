@@ -1,4 +1,4 @@
-package com.graduation.authentication.web.dto;
+package com.graduation.authentication.dto;
 
 import com.graduation.authentication.model.Authority;
 import com.graduation.authentication.model.Company;
