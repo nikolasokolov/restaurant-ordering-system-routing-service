@@ -34,7 +34,8 @@ public class JWTFilter extends GenericFilterBean {
             String jwt = SecurityUtils.resolveToken(httpServletRequest);
 
             // Skip checking token when user is trying to authenticate, because token will not be present
-            if (((HttpServletRequest) servletRequest).getRequestURI().contains("/api/")) {
+            if (((HttpServletRequest) servletRequest).getRequestURI().contains("/main/") ||
+                    ((HttpServletRequest) servletRequest).getRequestURI().contains("/account/")) {
                 if (StringUtils.hasText(jwt)) {
                     if (securityUtils.isValidToken(jwt)) {
                         Authentication authentication = securityUtils.getAuthenticationFromToken(jwt);
