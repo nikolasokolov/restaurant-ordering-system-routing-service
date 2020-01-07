@@ -24,10 +24,9 @@ authentication-properties:
 
 zuul:
   routes:
-    cloud:
+    restaurant-ordering-system:
       path: /main/**
-      sensitiveHeaders:
-      url: http://localhost:8081
+      serviceId: restaurant-ordering-system
       stripPrefix: false
 
 server:
@@ -42,3 +41,4 @@ eureka:
   client:
     service-url:
       default-zone: http://localhost:8761/eureka
+    fetch-registry: true
