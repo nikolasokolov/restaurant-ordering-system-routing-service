@@ -44,7 +44,7 @@ public class SecurityUtils {
         }
     }
 
-    public static boolean isAuthenticated(){
+    public static boolean isAuthenticated() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth instanceof UsernamePasswordAuthenticationToken;
     }
@@ -57,7 +57,7 @@ public class SecurityUtils {
         return null;
     }
 
-    private String getLoggedInUsernameFromAuthentication(String jwt){
+    private String getLoggedInUsernameFromAuthentication(String jwt) {
         Authentication authentication = getAuthenticationFromToken(jwt);
         try {
             return authentication.getName();
@@ -90,7 +90,6 @@ public class SecurityUtils {
                 return (User) authentication.getPrincipal();
             }
         }
-        log.info("Cannot fetch user from security context, trying to fetch user from token");
         return null;
     }
 
