@@ -1,6 +1,5 @@
 package com.graduation.authentication.security;
 
-
 import com.graduation.authentication.config.ApplicationProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -35,8 +34,8 @@ public class SecurityUtils {
 
     public String getAuthenticatedUsername() {
         if (Objects.isNull(SecurityUtils.getCurrentUser())) {
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-                    .getRequest();
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+                    .currentRequestAttributes()).getRequest();
             String token = resolveToken(request);
             return getLoggedInUsernameFromAuthentication(token);
         } else {
@@ -44,17 +43,13 @@ public class SecurityUtils {
         }
     }
 
-    public static boolean isAuthenticated() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth instanceof UsernamePasswordAuthenticationToken;
-    }
-
     public static String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
+        } else {
+            return null;
         }
-        return null;
     }
 
     private String getLoggedInUsernameFromAuthentication(String jwt) {
