@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service("userDetailsService")
 @Slf4j
+@Service("userDetailsService")
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private final UserRepository userRepository;
