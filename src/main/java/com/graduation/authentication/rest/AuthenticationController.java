@@ -27,7 +27,7 @@ public class AuthenticationController {
         if (Objects.nonNull(userTokenResponseDTO)) {
             return new ResponseEntity<>(userTokenResponseDTO, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
