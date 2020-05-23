@@ -1,4 +1,4 @@
-package com.graduation.authentication.model;
+package com.graduation.authentication.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,28 +9,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Table;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "company")
 public class Company {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String address;
 
-    @NotBlank
     private String phoneNumber;
-
-    @Lob
-    private byte[] logo;
 }
