@@ -1,6 +1,6 @@
 package com.graduation.authentication.repository;
 
-import com.graduation.authentication.model.User;
+import com.graduation.authentication.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

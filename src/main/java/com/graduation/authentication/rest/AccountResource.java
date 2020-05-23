@@ -1,7 +1,7 @@
 package com.graduation.authentication.rest;
 
 import com.graduation.authentication.rest.dto.UserDetailsDTO;
-import com.graduation.authentication.model.User;
+import com.graduation.authentication.domain.User;
 import com.graduation.authentication.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

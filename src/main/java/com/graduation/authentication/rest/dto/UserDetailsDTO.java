@@ -1,8 +1,8 @@
 package com.graduation.authentication.rest.dto;
 
-import com.graduation.authentication.model.Authority;
-import com.graduation.authentication.model.Company;
-import com.graduation.authentication.model.User;
+import com.graduation.authentication.domain.Authority;
+import com.graduation.authentication.domain.Company;
+import com.graduation.authentication.domain.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

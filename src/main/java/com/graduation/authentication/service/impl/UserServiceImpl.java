@@ -1,6 +1,6 @@
 package com.graduation.authentication.service.impl;
 
-import com.graduation.authentication.model.User;
+import com.graduation.authentication.domain.User;
 import com.graduation.authentication.repository.UserRepository;
 import com.graduation.authentication.security.SecurityUtils;
 import com.graduation.authentication.service.UserService;

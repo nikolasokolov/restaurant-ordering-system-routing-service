@@ -1,6 +1,6 @@
 package com.graduation.authentication.service;
 
-import com.graduation.authentication.model.User;
+import com.graduation.authentication.domain.User;
 
 public interface UserService {
 

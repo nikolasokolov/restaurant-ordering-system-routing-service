@@ -1,7 +1,7 @@
 package com.graduation.authentication.config;
 
 import com.graduation.authentication.security.AuthoritiesConstants;
-import com.graduation.authentication.security.Http401UnauthorizedEntryPoint;
+import com.graduation.authentication.security.UnauthorizedEntryPoint;
 import com.graduation.authentication.security.jwt.JWTConfigurer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +21,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 
-import javax.inject.Inject;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final Http401UnauthorizedEntryPoint authenticationEntryPoint;
+    private final UnauthorizedEntryPoint authenticationEntryPoint;
     private final UserDetailsService userDetailsService;
     private final JWTConfigurer jwtConfigurer;
 
