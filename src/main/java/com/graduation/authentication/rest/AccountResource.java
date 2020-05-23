@@ -1,6 +1,6 @@
 package com.graduation.authentication.rest;
 
-import com.graduation.authentication.dto.UserDetailsResponseDTO;
+import com.graduation.authentication.rest.dto.UserDetailsDTO;
 import com.graduation.authentication.model.User;
 import com.graduation.authentication.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,23 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import java.util.Objects;
+import static java.util.Objects.nonNull;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api")
-@RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class AccountResource {
+
     private final UserService userService;
 
     @RequestMapping(value = "/account", method = RequestMethod.GET)
-    public ResponseEntity<UserDetailsResponseDTO> getAccount() {
+    public ResponseEntity<UserDetailsDTO> getUserDetails() {
         User user = userService.getUser();
-        if (Objects.nonNull(user)) {
-            return new ResponseEntity<>(new UserDetailsResponseDTO(user), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return nonNull(user) ? ResponseEntity.ok(new UserDetailsDTO(user)) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

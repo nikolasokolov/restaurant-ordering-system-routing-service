@@ -11,8 +11,9 @@ import org.springframework.stereotype.Component;
 import javax.inject.Inject;
 
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Inject))
+@RequiredArgsConstructor
 public class JWTConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+
     private final SecurityUtils securityUtils;
 
     @Override

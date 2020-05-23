@@ -25,9 +25,10 @@ import javax.inject.Inject;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor(onConstructor = @__(@Inject))
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     private final Http401UnauthorizedEntryPoint authenticationEntryPoint;
     private final UserDetailsService userDetailsService;
     private final JWTConfigurer jwtConfigurer;

@@ -19,8 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class JWTFilter extends GenericFilterBean {
+
     private static final String OPTIONS = "OPTIONS";
 
     private final SecurityUtils securityUtils;

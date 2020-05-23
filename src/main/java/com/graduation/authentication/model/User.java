@@ -2,6 +2,7 @@ package com.graduation.authentication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
@@ -14,7 +15,9 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User implements Serializable {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,7 +25,8 @@ public class User implements Serializable {
 
     @NotNull
     @Size(min = 5, max = 100)
-    @Column(name = "username", length = 100, unique = true, nullable = false)
+    @EqualsAndHashCode.Include
+    @Column(name = "username", length = 100, unique = true)
     private String username;
 
     @JsonIgnore
@@ -36,7 +40,6 @@ public class User implements Serializable {
     @Column(name = "email", length = 100)
     private String email;
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_authority", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
@@ -45,32 +48,5 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        User user = (User) o;
-
-        return username.equals(user.username);
-    }
-
-    @Override
-    public int hashCode() {
-        return username.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                "}";
-    }
 
 }

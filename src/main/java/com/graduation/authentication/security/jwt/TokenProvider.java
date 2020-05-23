@@ -14,11 +14,13 @@ import javax.inject.Inject;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-@Component
 @Slf4j
-@RequiredArgsConstructor(onConstructor = @__(@Inject))
+@Component
+@RequiredArgsConstructor
 public class TokenProvider {
+
     private static final String AUTHORITIES_KEY = "auth";
+
     private final ApplicationProperties applicationProperties;
 
     private String secretKey;

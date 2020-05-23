@@ -12,6 +12,7 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class Http401UnauthorizedEntryPoint implements AuthenticationEntryPoint {
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException arg2)
             throws IOException {
