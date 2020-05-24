@@ -1,4 +1,4 @@
-package com.graduation.authentication.model;
+package com.graduation.authentication.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

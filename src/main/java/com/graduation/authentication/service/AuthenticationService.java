@@ -1,7 +1,10 @@
 package com.graduation.authentication.service;
 
-import com.graduation.authentication.dto.UserTokenResponseDTO;
+import com.graduation.authentication.rest.dto.UserTokenDTO;
+
+import java.util.Optional;
 
 public interface AuthenticationService {
-    UserTokenResponseDTO authenticate(String username, String password);
+
+    Optional<UserTokenDTO> authenticate(String username, String password);
 }

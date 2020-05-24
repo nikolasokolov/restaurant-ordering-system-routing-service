@@ -27,9 +27,11 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Inject))
+@RequiredArgsConstructor
 public class SecurityUtils {
+
     private static final String AUTHORITIES_KEY = "auth";
+
     private final ApplicationProperties applicationProperties;
 
     public String getAuthenticatedUsername() {
